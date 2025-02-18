@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "CleanupFunctionApp": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7154",
+      "launchBrowser": false
+    }
+  }
+}

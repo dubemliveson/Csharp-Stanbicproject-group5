@@ -1,7 +1,7 @@
 ## Stanbic Disep 4.0 Capstone Project - Group 5
 **Azure Resource Cleanup Function**  
 
-A scheduled Azure Function for automated resource cleanup and email alerts
+This project is a scheduled Azure Function that automates resource cleanup and notifies the user with email alerts
 
 <br>
 
@@ -18,7 +18,7 @@ This project implements an Azure Function that:
 
 ## 🚀 Features
 - **Scheduled Cleanup:** Runs every 2 minutes via TimerTrigger
-- **Tag-Based Filtering:** Targets resources with Environment=Test
+- **Tag-Based Filtering:** Targets resources with `Environment=Test`
 - **Resource Deletion:** Deletes Azure resources programmatically
 - **Email Notifications:** Sends alerts using SMTP
 - **Interactive Auth:** Uses MSAL.NET for user-based Azure authentication
@@ -27,7 +27,7 @@ This project implements an Azure Function that:
 <br>
   
 ## 🛠️ Prerequisites
-1. **.NET SDK:** .NET 8.0+
+1. **.NET SDK:** `.NET 8.0+`
 2. **Azure CLI:** Install here
 3. **Azure Account:** With contributor access to target subscription
 4. **SMTP Server:** Credentials for sending email alerts

@@ -73,6 +73,7 @@ dotnet build
 ```bash
 func start
 ```
+<br>
 
 ## 🕒 How It Works
 
@@ -139,10 +140,10 @@ func azure functionapp publish <your-app-name>
 - **Interactive Auth:** Requires manual login each time (not suitable for production)
 - **SMTP Credentials:** Use app passwords where possible
 - **Production Alternative:**
-      - Use Managed Identities instead of interactive auth
-      - Use [Azure AD authentication](https://learn.microsoft.com/en-us/entra/identity/?spm=a2ty_o01.29997173.0.0.1f8bc921NoIOAf) for email services instead of SMTP credentials
-          - Example: Use Microsoft Graph API or SMTP with OAuth2 (via Azure AD app registration) to send emails securely without storing passwords
-          - Benefits: Enhanced security, support for MFA, and centralized access control
+  - Use Managed Identities instead of interactive auth
+  - Use [Azure AD authentication](https://learn.microsoft.com/en-us/entra/identity/?spm=a2ty_o01.29997173.0.0.1f8bc921NoIOAf) for email services instead of SMTP credentials
+    - Example: Use Microsoft Graph API or SMTP with OAuth2 (via Azure AD app registration) to send emails securely without storing passwords
+    - Benefits: Enhanced security, support for MFA, and centralized access control
 
  <br>
  
@@ -195,9 +196,9 @@ For questions or feedback:
 
 ## 🧑‍🤝‍🧑 Contributors  
 - **Chidubem Nkemka** - *Lead Developer* - [GitHub Profile](https://github.com/dubemliveson )  
-- **Onyinyechi Anetoh** - *Cloud Engineer* - [GitHub Profile](https://github.com/janedoe )  
+- **Onyinyechi Anetoh** - *Cloud Engineer* - [GitHub Profile](https://github.com/anetohonyinyechi )  
 - **Ikechukwu Okoye** - *Architect* - [GitHub Profile](https://github.com/OluwaRuben )
-- **Oluwasegun Gabriel** - *Architect* - [GitHub Profile](https://github.com/OluwaRuben )   
+- **Oluwasegun Gabriel** - *Architect* - [GitHub Profile](https://github.com/chespond )   
 
 > Contributions are welcome! See [Contributing](#-contributing) for details.
 

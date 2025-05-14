@@ -1,7 +1,7 @@
 ## Stanbic Disep 4.0 Capstone Project - Group 5
 **Azure Resource Cleanup Function**  
 
-This project is a scheduled Azure Function that automates resource cleanup and notifies the user with email alerts
+This project is a scheduled `Azure Function` that automates resource cleanup and notifies the user with email alerts
 
 <br>
 

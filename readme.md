@@ -10,17 +10,17 @@ This project implements an Azure Function that:
 
 - Scans Azure resources tagged with `Environment=Test`
 - Deletes matching resources automatically
-- Sends email alerts via SMTP
+- Sends email alerts via `SMTP`
 - Uses `MSAL.NET` for interactive authentication
 - Designed for development/testing environments to manage unused resources.
 
 <br>
 
 ## 🚀 Features
-- **Scheduled Cleanup:** Runs every 2 minutes via TimerTrigger
+- **Scheduled Cleanup:** Runs every 2 minutes via `TimerTrigger`
 - **Tag-Based Filtering:** Targets resources with `Environment=Test`
 - **Resource Deletion:** Deletes Azure resources programmatically
-- **Email Notifications:** Sends alerts using SMTP
+- **Email Notifications:** Sends alerts using `SMTP`
 - **Interactive Auth:** Uses `MSAL.NET` for user-based Azure authentication
 - **Comprehensive Logging:** Tracks execution details and errors
 
@@ -138,7 +138,11 @@ func azure functionapp publish <your-app-name>
 ## ⚠️ Security Notes
 - **Interactive Auth:** Requires manual login each time (not suitable for production)
 - **SMTP Credentials:** Use app passwords where possible
-- **Production Alternative:** Use Managed Identities instead of interactive auth
+- **Production Alternative:**
+      - Use Managed Identities instead of interactive auth
+      - Use [Azure AD authentication](https://learn.microsoft.com/en-us/entra/identity/?spm=a2ty_o01.29997173.0.0.1f8bc921NoIOAf) for email services instead of SMTP credentials
+          - Example: Use Microsoft Graph API or SMTP with OAuth2 (via Azure AD app registration) to send emails securely without storing passwords
+          - Benefits: Enhanced security, support for MFA, and centralized access control
 
  <br>
  

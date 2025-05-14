@@ -5,13 +5,13 @@ A scheduled Azure Function for automated resource cleanup and email alerts
 ## 📌 Overview
 This project implements an Azure Function that:
 
-- Scans Azure resources tagged with Environment=Test
+- Scans Azure resources tagged with `Environment=Test`
 - Deletes matching resources automatically
 - Sends email alerts via SMTP
 - Uses MSAL.NET for interactive authentication
 - Designed for development/testing environments to manage unused resources.
 
----
+
 
 ## 🚀 Features
 - **Scheduled Cleanup:** Runs every 2 minutes via TimerTrigger
@@ -21,7 +21,7 @@ This project implements an Azure Function that:
 - **Interactive Auth:** Uses MSAL.NET for user-based Azure authentication
 - **Comprehensive Logging:** Tracks execution details and errors
 
----
+
   
 ## 🛠️ Prerequisites
 1. **.NET SDK:** .NET 8.0+
@@ -30,7 +30,7 @@ This project implements an Azure Function that:
 4. **SMTP Server:** Credentials for sending email alerts
 5. **Environment Variables:** Configuration values (see below)
 
----
+
    
 ## 📦 Installation & Setup
 **1. Clone Repository**
@@ -72,6 +72,7 @@ func start
 ```
 
 ## 🕒 How It Works
+
 ## ⏱️ Schedule
 Uses cron expression `0 */2 * * * *` (every 2 minutes):
 ```csharp
@@ -154,11 +155,13 @@ func azure functionapp publish CleanupFunctionApp
 **3. Configure App Settings**
 Set environment variables in Azure Portal under "Configuration"
 
+
 ## 📊 Monitoring
 Check Azure Monitor logs or local console output for:
 - Resource deletion status
 - Email delivery status
 - Error details with stack traces
+
 
 ## 🤝 Contributing
 1. Fork the repository

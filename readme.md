@@ -1,70 +1,195 @@
-# C# Stanbic Project - Group 5  
-**A C# Azure Functions project demonstrating scheduled tasks using TimerTrigger**
+## Azure Resource Cleanup Function - Group 5
+A scheduled Azure Function for automated resource cleanup and email alerts
 
-## 📌 Overview  
-This project showcases the use of **Azure Functions TimerTrigger** to execute scheduled tasks in C#. The core functionality includes a recurring function that runs every **5 minutes** using a cron expression. This template can be extended for scenarios like automated data processing, periodic cleanup tasks, or health checks.
+
+## 📌 Overview
+This project implements an Azure Function that:
+
+- Scans Azure resources tagged with Environment=Test
+- Deletes matching resources automatically
+- Sends email alerts via SMTP
+- Uses MSAL.NET for interactive authentication
+- Designed for development/testing environments to manage unused resources.
 
 ---
 
-## 🚀 Features  
-- **Scheduled Execution**: Uses `TimerTrigger` to run functions on a predefined schedule  
-- **Cron Expression**: Implements `0 */5 * * * *` to trigger tasks every 5 minutes  
-- **Scalable Architecture**: Built on Azure Functions for serverless execution  
-- **Reusability**: Easily adaptable for custom schedules or business logic  
+## 🚀 Features
+- **Scheduled Cleanup:** Runs every 2 minutes via TimerTrigger
+- **Tag-Based Filtering:** Targets resources with Environment=Test
+- **Resource Deletion:** Deletes Azure resources programmatically
+- **Email Notifications:** Sends alerts using SMTP
+- **Interactive Auth:** Uses MSAL.NET for user-based Azure authentication
+- **Comprehensive Logging:** Tracks execution details and errors
 
 ---
+  
+## 🛠️ Prerequisites
+1. **.NET SDK:** .NET 8.0+
+2. **Azure CLI:** Install here
+3. **Azure Account:** With contributor access to target subscription
+4. **SMTP Server:** Credentials for sending email alerts
+5. **Environment Variables:** Configuration values (see below)
 
-## 🛠️ Prerequisites  
-1. **.NET SDK**: Install [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0 ) (required for Azure Functions v4)  
-2. **Azure Functions Core Tools**:  
-   ```bash
-   npm install -g azure-functions-core-tools@4
-3. **Azure Account (Optional): For deploying to Azure**
-
+---
+   
 ## 📦 Installation & Setup
-1. **Clone the repository**
-- git clone https://github.com/dubemliveson/Csharp-Stanbicproject-group5.git 
-- cd Csharp-Stanbicproject-group5
+**1. Clone Repository**
+```bash
+git clone https://github.com/dubemliveson/Csharp-Stanbicproject-group5.git 
+cd Csharp-Stanbicproject-group5
+```
 
-2. **Restore dependencies**
-- dotnet restore
+**2. Configure Environment Variables**
+Create a `local.settings.json` file with:
+```json
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "SubscriptionId": "your-subscription-id",
+    "TagKey": "Environment",
+    "ClientId": "your-app-registration-client-id",
+    "TenantId": "your-directory-tenant-id",
+    "SmtpServer": "smtp.yourprovider.com",
+    "SmtpPort": "587",
+    "SmtpUsername": "your-smtp-email@example.com",
+    "SmtpPassword": "your-smtp-app-password",
+    "EmailRecipient": "alert-recipient@example.com"
+  }
+}
+```
 
-3. **Build the project**
-- dotnet build
+**3. Install Dependencies**
+```bash
+dotnet restore
+dotnet build
+```
 
-4. **Run the Azure Functions locally**
-- func start
+**4. Run Locally**
+```bash
+func start
+```
 
 ## 🕒 How It Works
-**TimerTrigger Function**
-The TimerTrigger function executes every 5 minutes using the cron expression 0 */5 * * * *.
+## ⏱️ Schedule
+Uses cron expression `0 */2 * * * *` (every 2 minutes):
+```csharp
+[TimerTrigger("0 */2 * * * *")] TimerInfo myTimer
+```
 
-**Cron Expression Breakdown**
-| Field       | Value | Description                  |
-|-------------|-------|------------------------------|
-| Seconds     | `0`   | Trigger at 0 seconds         |
-| Minutes     | `*/5` | Every 5 minutes              |
-| Hours       | `*`   | Any hour                     |
-| Day of Month| `*`   | Any day of the month         |
-| Month       | `*`   | Any month                    |
-| Day of Week | `*`   | Any day of the week          |
+## 🔍 Resource Filtering
+Deletes resources tagged with `Environment=Test`:
+```csharp
+if (resource.Data.Tags.TryGetValue("Environment", out var tagValue) && tagValue == "Test")
+```
+
+## 🗑️ Deletion Process
+1. Authenticates via MSAL interactive flow
+2. Iterates through all resource groups
+3. Deletes matching resources
+4. Waits for deletion completion
+5. Logs status codes (200/204 = success)
+
+## 📧 Email Alerts
+Sends notifications via:
+```csharp
+await SendEmailAlertAsync(
+    subject: $"Resource Deleted: {resource.Data.Name}",
+    body: $"Resource {resource.Data.Name} of type {resource.Data.ResourceType} was deleted.",
+    userEmail: _smtpUsername,
+    userPassword: _smtpPassword,
+    recipientEmail: _emailRecipient
+);
+```
 
 ## 📝 Usage
-1. Modify the TimerTrigger schedule in function.json or directly in the C# attribute
-2. Replace the placeholder logic in Run() with your custom task
-3. Test locally with func start, then deploy to Azure if needed
+**1. Customize Tag Filter**
+Modify tag key/value in `local.settings.json`:
+```json
+"TagKey": "Environment"
+```
 
+**2. Adjust Schedule**
+Edit the TimerTrigger attribute:
+```csharp
+[TimerTrigger("0 */2 * * * *")] // Format: {second} {minute} {hour} {day} {month} {day-of-week}
+```
+
+**3. Configure SMTP**
+Update email settings in `local.settings.json`
+
+**4. Test Locally**
+Run with `func start` and monitor logs
+
+**5. Deploy to Azure**
+```bash
+az login
+az functionapp create --name <your-app-name> --resource-group <group-name> --consumption-plan-location <location>
+func azure functionapp publish <your-app-name>
+```
+
+## ⚠️ Security Notes
+- **Interactive Auth:** Requires manual login each time (not suitable for production)
+- **SMTP Credentials:** Use app passwords where possible
+- **Production Alternative:** Use Managed Identities instead of interactive auth
+
+  
 ## 🌐 Deployment to Azure
-1. Create a Function App in the Azure portal
-2. Publish the project:
+**1. Create Function App**
+```bash
+az functionapp create \
+  --name CleanupFunctionApp \
+  --resource-group MyResourceGroup \
+  --consumption-plan-location eastus \
+  --runtime dotnet \
+  --storage-account <storage-account-name>
+```
 
-- func azure functionapp publish <Your-Function-App-Name>
+**2. Publish Function**
+```bash
+func azure functionapp publish CleanupFunctionApp
+```
+
+**3. Configure App Settings**
+Set environment variables in Azure Portal under "Configuration"
+
+## 📊 Monitoring
+Check Azure Monitor logs or local console output for:
+- Resource deletion status
+- Email delivery status
+- Error details with stack traces
 
 ## 🤝 Contributing
-Contributions are welcome!
-
 1. Fork the repository
-2. Create a new branch (git checkout -b feature/your-feature)
-3. Commit your changes (git commit -m 'Add feature')
-4. Push to the branch (git push origin feature/your-feature)
-5. Open a Pull Request
+2. Create a feature branch (`git checkout -b feature/new-alert-channel`)
+3. Commit changes (`git commit -m 'Add Slack alerts'`)
+4. Push to branch (`git push origin feature/new-alert-channel`)
+5. Open a pull request
+
+📧 Contact
+For questions or feedback:
+- E-mail: dubemnkemka@gmail.com
+
+**Built with ❤️ using Azure Functions, MSAL.NET, and C#**
+
+📌 Additional Resources
+- [Azure Functions Documentation](https://learn.microsoft.com/en-us/azure/azure-functions/?spm=a2ty_o01.29997173.0.0.1f8bc921NoIOAf)
+- [MSAL.NET GitHub](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet?spm=a2ty_o01.29997173.0.0.1f8bc921NoIOAf)
+- [Azure Resource Manager Docs](https://learn.microsoft.com/en-us/azure/azure-resource-manager/?spm=a2ty_o01.29997173.0.0.1f8bc921NoIOAf)
+
+## 🧑‍🤝‍🧑 Contributors  
+- **Chidubem Nkemka** - *Lead Developer* - [GitHub Profile](https://github.com/dubemliveson )  
+- **Onyinyechi Anetoh** - *Cloud Engineer* - [GitHub Profile](https://github.com/janedoe )  
+- **Ikechukwu Okoye** - *Architect* - [GitHub Profile](https://github.com/OluwaRuben )
+- **Oluwasegun Gabriel** - *Architect* - [GitHub Profile](https://github.com/OluwaRuben )   
+
+> Contributions are welcome! See [Contributing](#-contributing) for details.
+
+
+
+
+
+
+
+

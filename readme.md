@@ -1,4 +1,4 @@
-## Azure Resource Cleanup Function - Group 5
+## Azure Resource Cleanup Function - Group 5 - Stanbic Disep Project
 A scheduled Azure Function for automated resource cleanup and email alerts
 
 
@@ -11,7 +11,7 @@ This project implements an Azure Function that:
 - Uses MSAL.NET for interactive authentication
 - Designed for development/testing environments to manage unused resources.
 
-
+<br>
 
 ## 🚀 Features
 - **Scheduled Cleanup:** Runs every 2 minutes via TimerTrigger
@@ -21,7 +21,7 @@ This project implements an Azure Function that:
 - **Interactive Auth:** Uses MSAL.NET for user-based Azure authentication
 - **Comprehensive Logging:** Tracks execution details and errors
 
-
+<br>
   
 ## 🛠️ Prerequisites
 1. **.NET SDK:** .NET 8.0+
@@ -30,7 +30,7 @@ This project implements an Azure Function that:
 4. **SMTP Server:** Credentials for sending email alerts
 5. **Environment Variables:** Configuration values (see below)
 
-
+<br>
    
 ## 📦 Installation & Setup
 **1. Clone Repository**

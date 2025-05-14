@@ -107,6 +107,7 @@ await SendEmailAlertAsync(
     recipientEmail: _emailRecipient
 );
 ```
+<br>
 
 ## 📝 Usage
 **1. Customize Tag Filter**
@@ -133,13 +134,15 @@ az login
 az functionapp create --name <your-app-name> --resource-group <group-name> --consumption-plan-location <location>
 func azure functionapp publish <your-app-name>
 ```
+<br>
 
 ## ⚠️ Security Notes
 - **Interactive Auth:** Requires manual login each time (not suitable for production)
 - **SMTP Credentials:** Use app passwords where possible
 - **Production Alternative:** Use Managed Identities instead of interactive auth
 
-  
+ <br>
+ 
 ## 🌐 Deployment to Azure
 **1. Create Function App**
 ```bash
@@ -159,6 +162,7 @@ func azure functionapp publish CleanupFunctionApp
 **3. Configure App Settings**
 Set environment variables in Azure Portal under "Configuration"
 
+<br>
 
 ## 📊 Monitoring
 Check Azure Monitor logs or local console output for:
@@ -166,6 +170,7 @@ Check Azure Monitor logs or local console output for:
 - Email delivery status
 - Error details with stack traces
 
+<br>
 
 ## 🤝 Contributing
 1. Fork the repository

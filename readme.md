@@ -11,7 +11,7 @@ This project implements an Azure Function that:
 - Scans Azure resources tagged with `Environment=Test`
 - Deletes matching resources automatically
 - Sends email alerts via SMTP
-- Uses MSAL.NET for interactive authentication
+- Uses `MSAL.NET` for interactive authentication
 - Designed for development/testing environments to manage unused resources.
 
 <br>
@@ -21,7 +21,7 @@ This project implements an Azure Function that:
 - **Tag-Based Filtering:** Targets resources with `Environment=Test`
 - **Resource Deletion:** Deletes Azure resources programmatically
 - **Email Notifications:** Sends alerts using SMTP
-- **Interactive Auth:** Uses MSAL.NET for user-based Azure authentication
+- **Interactive Auth:** Uses `MSAL.NET` for user-based Azure authentication
 - **Comprehensive Logging:** Tracks execution details and errors
 
 <br>
